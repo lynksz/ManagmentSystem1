@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/DataBase/">
+    <File Path="init.sql" />
+  </Folder>
   <Project Path="Client/ClientApp/ClientApp.csproj" Id="cdd446b1-57ef-494f-b4ba-951aaec7c808" />
   <Project Path="Server/ServerApp/ServerApp.csproj" Id="e82f8832-8197-4898-b5ff-e2274f092dfb" />
 </Solution>
