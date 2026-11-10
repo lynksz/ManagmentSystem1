@@ -18,7 +18,7 @@ namespace ServerApp.Migrations
 
             modelBuilder.Entity("ServerApp.Models.Course", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -27,48 +27,51 @@ namespace ServerApp.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Semester")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TeacherID")
+                    b.Property<int?>("TeacherId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("TeacherID");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
 
                     b.HasData(
                         new
                         {
-                            ID = 1,
+                            Id = 1,
                             Description = "Базовий курс C# та .NET",
                             Name = "Об'єктно-орієнтоване програмування",
                             Semester = "Осінь 2024",
-                            TeacherID = 1
+                            TeacherId = 1
                         },
                         new
                         {
-                            ID = 2,
+                            Id = 2,
                             Description = "Проєктування реляційних баз даних",
                             Name = "Бази даних та SQL",
                             Semester = "Осінь 2024",
-                            TeacherID = 2
+                            TeacherId = 2
                         });
                 });
 
             modelBuilder.Entity("ServerApp.Models.Proposal", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("CourseName")
                         .IsRequired()
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProposalType")
@@ -79,49 +82,51 @@ namespace ServerApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TeacherID")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("TeacherID");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Proposals");
                 });
 
             modelBuilder.Entity("ServerApp.Models.Teacher", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Teachers");
 
                     b.HasData(
                         new
                         {
-                            ID = 1,
+                            Id = 1,
                             Email = "shevchenko@univ.edu.ua",
                             Name = "Олександр Шевченко",
                             PasswordHash = "e10adc3949ba59abbe56e057f20f883e"
                         },
                         new
                         {
-                            ID = 2,
+                            Id = 2,
                             Email = "bondarenko@univ.edu.ua",
                             Name = "Олена Бондаренко",
                             PasswordHash = "c33367701511b4f6020ec61ded352059"
@@ -132,9 +137,7 @@ namespace ServerApp.Migrations
                 {
                     b.HasOne("ServerApp.Models.Teacher", "Teacher")
                         .WithMany("Courses")
-                        .HasForeignKey("TeacherID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Teacher");
                 });
@@ -143,7 +146,7 @@ namespace ServerApp.Migrations
                 {
                     b.HasOne("ServerApp.Models.Teacher", "Teacher")
                         .WithMany("Proposals")
-                        .HasForeignKey("TeacherID")
+                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

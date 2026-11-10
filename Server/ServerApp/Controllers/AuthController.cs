@@ -47,14 +47,15 @@ public class AuthController : Controller
             Expires = DateTimeOffset.UtcNow.AddHours(1)
         });
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Teachers");
     }
 
     [Authorize]
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Logout()
     {
         Response.Cookies.Delete("jwt");
-        return RedirectToAction("Login");
+        return RedirectToAction("Login", "Auth");
     }
 }

@@ -1,0 +1,30 @@
+@model Proposal
+@{ ViewData["Title"] = "Редагування пропозиції"; }
+
+<h2>Редагування пропозиції</h2>
+<div class="col-md-6">
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="TeacherId" class="form-label">Викладач</label>
+        <select asp-for="TeacherId" class="form-select" asp-items="ViewBag.TeacherId"></select>
+        <span asp-validation-for="TeacherId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CourseName" class="form-label">Назва курсу</label>
+        <input asp-for="CourseName" class="form-control" />
+        <span asp-validation-for="CourseName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ProposalType" class="form-label">Тип</label>
+        <select asp-for="ProposalType" class="form-select" asp-items="ViewBag.Types"></select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label">Статус</label>
+        <select asp-for="Status" class="form-select" asp-items="ViewBag.Statuses"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Зберегти</button>
+    <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+</form>
+</div>

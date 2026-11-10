@@ -16,64 +16,63 @@ namespace ServerApp.Migrations
                 name: "Teachers",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
                     PasswordHash = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Teachers", x => x.ID);
+                    table.PrimaryKey("PK_Teachers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Semester = table.Column<string>(type: "TEXT", nullable: false),
-                    TeacherID = table.Column<int>(type: "INTEGER", nullable: false)
+                    Semester = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    TeacherId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Courses", x => x.ID);
+                    table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_Teachers_TeacherID",
-                        column: x => x.TeacherID,
+                        name: "FK_Courses_Teachers_TeacherId",
+                        column: x => x.TeacherId,
                         principalTable: "Teachers",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Proposals",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TeacherID = table.Column<int>(type: "INTEGER", nullable: false),
-                    CourseName = table.Column<string>(type: "TEXT", nullable: false),
+                    TeacherId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CourseName = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
                     ProposalType = table.Column<string>(type: "TEXT", nullable: false),
                     Status = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Proposals", x => x.ID);
+                    table.PrimaryKey("PK_Proposals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Proposals_Teachers_TeacherID",
-                        column: x => x.TeacherID,
+                        name: "FK_Proposals_Teachers_TeacherId",
+                        column: x => x.TeacherId,
                         principalTable: "Teachers",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Teachers",
-                columns: new[] { "ID", "Email", "Name", "PasswordHash" },
+                columns: new[] { "Id", "Email", "Name", "PasswordHash" },
                 values: new object[,]
                 {
                     { 1, "shevchenko@univ.edu.ua", "Олександр Шевченко", "e10adc3949ba59abbe56e057f20f883e" },
@@ -82,7 +81,7 @@ namespace ServerApp.Migrations
 
             migrationBuilder.InsertData(
                 table: "Courses",
-                columns: new[] { "ID", "Description", "Name", "Semester", "TeacherID" },
+                columns: new[] { "Id", "Description", "Name", "Semester", "TeacherId" },
                 values: new object[,]
                 {
                     { 1, "Базовий курс C# та .NET", "Об'єктно-орієнтоване програмування", "Осінь 2024", 1 },
@@ -90,14 +89,14 @@ namespace ServerApp.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_TeacherID",
+                name: "IX_Courses_TeacherId",
                 table: "Courses",
-                column: "TeacherID");
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Proposals_TeacherID",
+                name: "IX_Proposals_TeacherId",
                 table: "Proposals",
-                column: "TeacherID");
+                column: "TeacherId");
         }
 
         /// <inheritdoc />
